@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Światowy Kodeks Karny Cyfrowy"
+description = "Publiczna, responsywna strona prezentująca cyfrowy kodeks, przepisy i materiały informacyjne, przygotowana do zbudowania jako statyczna witryna i publikacji przez GitHub Pages."
+version = "1.0.0"
+id = "artifacts/kodeks-cyfrowy"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19650
+
+[services.development]
+run = "pnpm --filter @workspace/kodeks-cyfrowy run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/kodeks-cyfrowy", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/kodeks-cyfrowy/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19650"
+BASE_PATH = "/"
